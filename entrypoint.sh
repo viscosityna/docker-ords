@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OPTS=`getopt -o h --long help,db-host:,db-port:,db-service-name:,db-sid:,apex-pu-pass:,apex-listener-pass:,apex-listener-pass:,apex-rest-pu-pass: -n 'parse-options' -- "$@"`
+OPTS=`getopt -o h --long help,db-host:,db-port:,db-service-name:,db-sid:,apex-pu-pass:,apex-listener-pass:,apex-listener-pass:,apex-rest-pu-pass:,db-sys-pass: -n 'parse-options' -- "$@"`
 
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 
@@ -13,6 +13,7 @@ while true; do
 		--db-port ) DB_PORT="$2"; shift; shift ;;
 		--db-service-name ) DB_SERVICE_NAME="$2"; shift; shift ;;
 		--db-sid ) DB_SID="$2"; shift; shift ;;
+		--db-sys-pass ) DB_SYS_PASSWORD="$2"; shift; shift ;;
 		--apex-pu-pass ) APEX_PUBLIC_USER_PASSWORD="$2"; shift; shift ;;
 		--apex-listener-pass ) APEX_LISTENER_PASSWORD="$2"; shift; shift ;;
 		--apex-rest-pu-pass )  APEX_REST_PUBLIC_USER_PASSWORD="$2"; shift; shift ;;
@@ -44,6 +45,8 @@ rest.services.ords.add=true
 user.apex.listener.password=$APEX_LISTENER_PASSWORD
 user.apex.restpublic.password=$APEX_REST_PUBLIC_USER_PASSWORD
 user.public.password=$APEX_PUBLIC_USER_PASSWORD
+sys.user=SYS
+sys.password=$DB_SYS_PASSWORD
 standalone.mode=false
 EOF
 
